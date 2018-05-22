@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Python Flask Bucket List App</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link href="../static/css/signup.css" rel="stylesheet">
+
+    <script>
+	    $(function() {
+	      $.ajax({
+          url: '/getSchedules',
+          type: 'GET',
+          success: function(res) {
+            var tr = $('<tr>').attr('class', 'list-group')
+				        .append($('<th>').attr('class', 'list-group-item-heading'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'));
+							    
+				
+				
+						var scheduleObj = JSON.parse(res);
+						var schedule = '';
+				
+						$.each(scheduleObj,function(index, value){
+							schedule = $(tr).clone();
+							$(schedule).find('th').text(value.date);
+							$(schedule).find('td').eq(0).text(value.home_team_name);
+							$(schedule).find('td').eq(1).text(value.home_team_score);
+							$(schedule).find('td').eq(2).text(value.away_team_score);
+							$(schedule).find('td').eq(3).text(value.away_team_name);
+							$('.jumbotron').append(schedule);
+						});
+          },
+          error: function(error) {
+            console.log(error);
+          }
+      });
+    });
+		</script>
+ 
+ 
+</head>
+ 
+<body>
+ 
+    <table class="type11" border="1" cellpadding="10px">
+    	<thead>
+	    	<tr class="list-group">
+				    <th class="list-group-item-heading">date</th>
+				    <td class="list-group-item-text">home team</td>
+				    <td class="list-group-item-text">home team score</td>
+				    <td class="list-group-item-text">away team score</td>
+				    <td class="list-group-item-text">away team</td>
+				</tr> 
+			</thead>
+    	<tbody class="jumbotron">
+    	</tbody>
+
+ 
+ 
+    </table>
+
+
+  <footer class="footer">
+      <p>&copy; Company 2015</p>
+  </footer>
+</body>
+ 
+</html>

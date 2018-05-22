@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Python Flask Bucket List App</title>
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link href="../static/css/signup.css" rel="stylesheet">
+
+    <script>
+	    $(function() {
+	      $.ajax({
+          url: '/getTeam',
+          type: 'GET',
+          success: function(res) {
+            var tr = $('<tr>').attr('class', 'list-group')
+				        .append($('<th>').attr('class', 'list-group-item-heading'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'));
+							    
+				
+				
+						var teamObj = JSON.parse(res);
+						var team = '';
+				
+						$.each(teamObj,function(index, value){
+							team = $(tr).clone();
+							$(team).find('th').text(value.team_name);
+							$(team).find('td').eq(0).text(value.total_game_count);
+							$(team).find('td').eq(1).text(value.winning_count);
+							$(team).find('td').eq(2).text(value.drawing_count);
+							$(team).find('td').eq(3).text(value.losing_count);
+							$(team).find('td').eq(4).text(value.winning_rate);
+							$(team).find('td').eq(5).text(value.games_behind);
+							$(team).find('td').eq(6).text(value.consecutive_winning_count);
+							$(team).find('td').eq(7).text(value.stadium);
+							$('.jumbotron').append(team);
+						});
+          },
+          error: function(error) {
+            console.log(error);
+          }
+      });
+    });
+		</script>
+ 
+ 
+</head>
+ 
+<body>
+ 
+    <table class="type11" border="1" cellpadding="10px">
+    	<thead>
+	    	<tr class="list-group">
+				    <th class="list-group-item-heading">team name</th>
+				    <td class="list-group-item-text">total game count</td>
+				    <td class="list-group-item-text">winning count</td>
+				    <td class="list-group-item-text">drawing count</td>
+				    <td class="list-group-item-text">losing count</td>
+				    <td class="list-group-item-text">winning rate</td>
+				    <td class="list-group-item-text">games_behind</td>
+				    <td class="list-group-item-text">consecutive winning count</td>
+				    <td class="list-group-item-text">stadium</td>
+				</tr> 
+			</thead>
+    	<tbody class="jumbotron">
+    	</tbody>
+
+ 
+ 
+    </table>
+
+
+  <footer class="footer">
+      <p>&copy; Company 2015</p>
+  </footer>
+</body>
+ 
+</html>
