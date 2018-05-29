@@ -15,7 +15,6 @@
           type: 'GET',
           data: {"team_id": {{team_id}}},
           success: function(res) {
-				    var h = $('<h1>');
 
 				    var img = $('<img>').attr('src', '/');
 							    
@@ -23,26 +22,11 @@
 						var teamObj = JSON.parse(res);
 
 						var team = '';
-						var h1 = '';
-						var iframe = $('<iframe>').attr('width', 560).attr('height',315).attr('allow', "autoplay");
-
-						// <iframe width="560" height="315" src="https://www.youtube.com/embed/1lv1WBkzzeI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
 				
 						$.each(teamObj,function(index, value){
-							h1 = $(h).clone();
-							$(h1).text("팀 승률 : " + value.winning_rate);
-							$('.winning-rate').append(h1);
-
 							img = $(img).clone();
 							$(img).prop('src', '../static/img/' + value.img);
 							$('.team-img').append(img);
-
-							iframe = $(iframe).clone();
-							if (value.youtube) {
-								$(iframe).prop('src', value.youtube);
-								$('.youtube-video').append(iframe);
-							}
 						});
 
 
@@ -52,7 +36,7 @@
           }
       });
       $.ajax({
-      	url: '/getSchedules',
+      	url: '/getballpark',
         type: 'GET',
         data: {"team_id": {{team_id}}},
         success: function(res) {
@@ -61,42 +45,32 @@
 		          				$('<td>').attr('class', 'list-group-item-text'),
 		          				$('<td>').attr('class', 'list-group-item-text'),
 		          				$('<td>').attr('class', 'list-group-item-text'),
+		          				$('<td>').attr('class', 'list-group-item-text'),
+		          				$('<td>').attr('class', 'list-group-item-text'),
 		          				$('<td>').attr('class', 'list-group-item-text'));
 						    
 			
+					var ballparkObj = JSON.parse(res);
+					var ballpark = '';
+
+					var img = $('<img>').attr('src', '/');
 			
-					var scheduleObj = JSON.parse(res);
-					var schedule = '';
-			
-					$.each(scheduleObj,function(index, value){
-						schedule = $(tr).clone();
-						$(schedule).find('th').text(value.date);
-						$(schedule).find('td').eq(0).text(value.home_team_name);
-						$(schedule).find('td').eq(1).text(value.home_team_score);
-						$(schedule).find('td').eq(2).text(value.away_team_score);
-						$(schedule).find('td').eq(3).text(value.away_team_name);
-						$('.jumbotron').append(schedule);
-					});
-        },
-        error: function(error) {
-          console.log(error);
-        }
-      });
-      $.ajax({
-      	url: '/getBattingAVG',
-        type: 'GET',
-        data: {"team_id": {{team_id}}},
-        success: function(res) {
-        	var h = $('<h1>');
+					$.each(ballparkObj,function(index, value){
+						ballpark = $(tr).clone();
+						$(ballpark).find('th').text(value.name);
+						$(ballpark).find('td').eq(0).text(value.location);
+						$(ballpark).find('td').eq(1).text(value.left);
+						$(ballpark).find('td').eq(2).text(value.middle);
+						$(ballpark).find('td').eq(3).text(value.right);
+						$(ballpark).find('td').eq(4).text(value.fence);
+						$(ballpark).find('td').eq(5).text(value.affordance);
+						$('.jumbotron').append(ballpark);
 
-					var h1 = '';
+						img = $(img).clone();
+						$(img).prop('src', '../static/img/ballpark/' + value.img);
+						$('.stadium-img').append(img);
 
-					var battingAVGObj = JSON.parse(res);
 
-					$.each(battingAVGObj,function(index, value){
-						h1 = $(h).clone();
-						$(h1).text("팀 타율 : " + value.battingAVG);
-						$('.batting-average').append(h1);
 					});
         },
         error: function(error) {
@@ -121,29 +95,28 @@
 		<a href="/showpitcher?team_id={{team_id}}">투수</a>
 		<a href="/showballpark?team_id={{team_id}}">구장</a>
 	</div>
+
+	<div class="stadium-img">
+	</div>
  
   <table class="type11" border="1" cellpadding="10px">
   	<thead>
     	<tr class="list-group">
-			    <th class="list-group-item-heading">date</th>
-			    <td class="list-group-item-text">home team</td>
-			    <td class="list-group-item-text">home team score</td>
-			    <td class="list-group-item-text">away team score</td>
-			    <td class="list-group-item-text">away team</td>
+			    <th class="list-group-item-heading">Stadium Name</th>
+			    <td class="list-group-item-text">Location</td>
+			    <td class="list-group-item-text">Left</td>
+			    <td class="list-group-item-text">Middle</td>
+			    <td class="list-group-item-text">Right</td>
+			    <td class="list-group-item-text">Fence Height</td>
+			    <td class="list-group-item-text">Affordance</td>
 			</tr> 
 		</thead>
   	<tbody class="jumbotron">
   	</tbody>
+
+
+
   </table>
-
-  <div class="batting-average">
-  </div>
-
-  <div class="winning-rate">
-  </div>
-
-  <div class="youtube-video">
-  </div>
 
 
   <footer class="footer">

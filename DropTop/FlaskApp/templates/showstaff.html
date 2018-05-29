@@ -6,7 +6,7 @@
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <link href="../static/css/home.css" rel="stylesheet">
+    <link href="../static/css/signup.css" rel="stylesheet">
 
     <script>
 	    $(function() {
@@ -15,7 +15,17 @@
           type: 'GET',
           data: {"team_id": {{team_id}}},
           success: function(res) {
-				    var h = $('<h1>');
+          	
+            var tr = $('<tr>').attr('class', 'list-group')
+				        .append($('<th>').attr('class', 'list-group-item-heading'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'));
 
 				    var img = $('<img>').attr('src', '/');
 							    
@@ -23,26 +33,11 @@
 						var teamObj = JSON.parse(res);
 
 						var team = '';
-						var h1 = '';
-						var iframe = $('<iframe>').attr('width', 560).attr('height',315).attr('allow', "autoplay");
-
-						// <iframe width="560" height="315" src="https://www.youtube.com/embed/1lv1WBkzzeI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
 				
 						$.each(teamObj,function(index, value){
-							h1 = $(h).clone();
-							$(h1).text("팀 승률 : " + value.winning_rate);
-							$('.winning-rate').append(h1);
-
 							img = $(img).clone();
 							$(img).prop('src', '../static/img/' + value.img);
 							$('.team-img').append(img);
-
-							iframe = $(iframe).clone();
-							if (value.youtube) {
-								$(iframe).prop('src', value.youtube);
-								$('.youtube-video').append(iframe);
-							}
 						});
 
 
@@ -52,7 +47,7 @@
           }
       });
       $.ajax({
-      	url: '/getSchedules',
+      	url: '/getstaffs',
         type: 'GET',
         data: {"team_id": {{team_id}}},
         success: function(res) {
@@ -60,43 +55,20 @@
 			        .append($('<th>').attr('class', 'list-group-item-heading'),
 		          				$('<td>').attr('class', 'list-group-item-text'),
 		          				$('<td>').attr('class', 'list-group-item-text'),
-		          				$('<td>').attr('class', 'list-group-item-text'),
 		          				$('<td>').attr('class', 'list-group-item-text'));
 						    
 			
 			
-					var scheduleObj = JSON.parse(res);
-					var schedule = '';
+					var staffObj = JSON.parse(res);
+					var staff = '';
 			
-					$.each(scheduleObj,function(index, value){
-						schedule = $(tr).clone();
-						$(schedule).find('th').text(value.date);
-						$(schedule).find('td').eq(0).text(value.home_team_name);
-						$(schedule).find('td').eq(1).text(value.home_team_score);
-						$(schedule).find('td').eq(2).text(value.away_team_score);
-						$(schedule).find('td').eq(3).text(value.away_team_name);
-						$('.jumbotron').append(schedule);
-					});
-        },
-        error: function(error) {
-          console.log(error);
-        }
-      });
-      $.ajax({
-      	url: '/getBattingAVG',
-        type: 'GET',
-        data: {"team_id": {{team_id}}},
-        success: function(res) {
-        	var h = $('<h1>');
-
-					var h1 = '';
-
-					var battingAVGObj = JSON.parse(res);
-
-					$.each(battingAVGObj,function(index, value){
-						h1 = $(h).clone();
-						$(h1).text("팀 타율 : " + value.battingAVG);
-						$('.batting-average').append(h1);
+					$.each(staffObj,function(index, value){
+						staff = $(tr).clone();
+						$(staff).find('th').text(value.name);
+						$(staff).find('td').eq(0).text(value.num);
+						$(staff).find('td').eq(1).text(value.year);
+						$(staff).find('td').eq(2).text(value.job);
+						$('.jumbotron').append(staff);
 					});
         },
         error: function(error) {
@@ -125,25 +97,18 @@
   <table class="type11" border="1" cellpadding="10px">
   	<thead>
     	<tr class="list-group">
-			    <th class="list-group-item-heading">date</th>
-			    <td class="list-group-item-text">home team</td>
-			    <td class="list-group-item-text">home team score</td>
-			    <td class="list-group-item-text">away team score</td>
-			    <td class="list-group-item-text">away team</td>
+			    <td class="list-group-item-text">name</td>
+			    <td class="list-group-item-text">num</td>
+			    <td class="list-group-item-text">year</td>
+			    <td class="list-group-item-text">job</td>
 			</tr> 
 		</thead>
   	<tbody class="jumbotron">
   	</tbody>
+
+
+
   </table>
-
-  <div class="batting-average">
-  </div>
-
-  <div class="winning-rate">
-  </div>
-
-  <div class="youtube-video">
-  </div>
 
 
   <footer class="footer">

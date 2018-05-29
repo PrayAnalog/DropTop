@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html style='height:100%' lang="en">
+ 
+<head>
+    <title>Droptop</title>
+    <!-- <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet"> -->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link href="../static/css/home.css" rel="stylesheet">
+
+    <script>
+	    $(function() {
+	      $.ajax({
+	      	url: '/getTSchedules',
+	      	type:'GET',
+	      	async: false,
+	      	success: function(ret) {
+            var tr = $('<tr>').attr('class', 'list-group')
+				        .append($('<th>').attr('class', 'list-group-item-heading'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'));
+			// var tr1 = $('<tr>').attr('class', 'list-group')
+			// 			.append($('<td>').attr('class', 'list-group-item-tect'));
+			          				
+							    
+				
+				
+						var scheduleObj = JSON.parse(ret);
+						var schedule = '';
+						// if (scheduleObj==NONE){
+						// 	schedule = $(tr1).clone();
+						// 	$(schedule).find('td').text('No schedule')
+						// }
+						// else{
+				
+						$.each(scheduleObj,function(index, value){
+							schedule = $(tr).clone();
+							$(schedule).find('th').text(value.home_team);
+							$(schedule).find('td').eq(0).text('vs');
+							$(schedule).find('td').eq(1).text(value.away_team);
+							$('.jumbotron_a').append(schedule);
+						});
+
+          	},
+          error: function(error) {
+            console.log(error);
+          }
+
+	    });	    	
+	      $.ajax({
+          url: '/getBatterRank',
+          type: 'GET',
+          async: false,
+          success: function(res) {
+            var tr = $('<tr>').attr('class', 'list-group')
+				        .append($('<th>').attr('class', 'list-group-item-heading'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'));
+			          				
+							    
+				
+				
+						var brankObj = JSON.parse(res);
+						var brank = '';
+						var tempo = 100;
+						var rank =0;
+						// var rank = 1;
+						$.each(brankObj,function(index, value){
+							brank = $(tr).clone();
+
+							if (tempo>value.avg){
+								rank = index+1
+								tempo = value.avg
+								$(brank).find('th').text(rank);
+							}else if ( tempo == value.avg){
+								$(brank).find('th').text(rank);
+							}
+							
+							
+							$(brank).find('td').eq(0).text(value.name);
+							$(brank).find('td').eq(1).text(value.team);
+							$(brank).find('td').eq(2).text(parseFloat(value.avg).toFixed(3));
+							$('.jumbotron_b').append(brank);
+					
+						});
+          },
+          error: function(error) {
+            console.log(error);
+          }
+      });
+	      $.ajax({
+	      	url: '/getPitcherRank',
+	      	type:'GET',
+	      	async: false,
+	      	success: function(rep) {
+            var tr = $('<tr>').attr('class', 'list-group')
+				        .append($('<th>').attr('class', 'list-group-item-heading'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'),
+			          				$('<td>').attr('class', 'list-group-item-text'));
+			          				
+							    
+				
+				
+						var prankObj = JSON.parse(rep);
+						var prank = '';
+						var tempo = 100 ; 
+						var rank=0;
+				
+						$.each(prankObj,function(index, value){
+							prank = $(tr).clone();
+							// $(prank).find('th').text(index+1);
+					
+							if(tempo>value.w){
+								rank=index+1;
+								tempo = value.w
+								$(prank).find('th').text(rank);
+								
+							}else if(tempo==value.w){
+								$(prank).find('th').text(rank);	
+
+							}
+							$(prank).find('td').eq(0).text(value.name);
+							$(prank).find('td').eq(1).text(value.team);
+							$(prank).find('td').eq(2).text(value.w);
+							$('.jumbotron_c').append(prank);
+						});
+          },
+          error: function(error) {
+            console.log(error);
+          }
+
+	    });
+	      // var obj = new Object();
+	      // obj.team = "롯데"
+	      // var jsonData = JSON.stringify(obj)
+	      // $.ajax({
+	      // 	url:'/getPitcherRank',
+	      // 	type:'POST',
+	      // 	dataType:'json',
+	      // 	data:{
+	      // 		json: jsonData
+	      // 	},
+	      // 	success: function(data){
+	      // 		if(data.answer=='success'){
+	      // 			alert('yes')
+	      // 		}else if(data.answer=='fail'){
+	      // 			alert('fail')
+	      // 		}else if(data.answer=='error'){
+	      // 			alert('error')
+	      // 		}
+	      // 	},
+	      // 	error : function(e){
+	      // 		alert('server error')
+	      // 	}
+
+
+
+	      // })
+
+
+    });
+		</script>
+ 
+ 
+</head>
+ 
+<body style='height:100%'>
+	<div class = 'frame'> 
+		<div class = 'header'>
+			<div class='logo'><p>DROPTOP</p></div>
+		</div>
+		<!-- header  -->
+		<div class='container'>
+			<div class = 'nav'>
+				<!-- <table class='nav-table'>
+					<tbody>
+						<tr class = 'nav-row'>
+							<td class= 'nav-item'><a href="/getTeam?id=1" class = 'nav-link'>두산</a></td>
+							<td class= 'nav-item'><a href="/getTeam?id=2" class = 'nav-link'>SK</a></td>
+							<td class= 'nav-item'><a href="/getTeam?id=3" class = 'nav-link'>한화</a></td>
+							<td class= 'nav-item'><a href="/getTeam?id=4" class = 'nav-link'>KIA</a></td>
+							<td class= 'nav-item'><a href="/getTeam?id=5" class = 'nav-link'>롯데</a></td>
+						</tr>
+						<tr class = 'nav-row'>
+							<td class= 'nav-item'><a href="/getTeam?id=6"class = 'nav-link'>LG</a></td>
+							<td class= 'nav-item'><a href="/getTeam?id=7"class = 'nav-link'>넥센</a></td>
+							<td class= 'nav-item'><a href="/getTeam?id=8"class = 'nav-link'>KT</a></td>
+							<td class= 'nav-item'><a href="/getTeam?id=9"class = 'nav-link'>삼성</a></td>
+							<td class= 'nav-item'><a href="/getTeam?id=10"class = 'nav-link'>NC</a></td>
+						</tr>
+					</tbody>
+				</table>			 -->
+				<ul class = 'nav-list'>
+					<li class= 'nav-item'><a href="/showteam?team_id=1" class ='nav-link'>Doosan</a></li>
+					<li class= 'nav-item'><a href="/showteam?team_id=2" class ='nav-link'>SK</a></li>
+					<li class= 'nav-item'><a href="/showteam?team_id=3" class ='nav-link'>Hanhwa</a></li>
+					<li class= 'nav-item'><a href="/showteam?team_id=4" class ='nav-link'>KIA</a></li>
+					<li class= 'nav-item'><a href="/showteam?team_id=5" class ='nav-link'>Lotte</a></li>
+					<li class= 'nav-item'><a href="/showteam?team_id=6" class ='nav-link'>LG</a></li>
+					<li class= 'nav-item'><a href="/showteam?team_id=7" class ='nav-link'>Nexen</a></li>
+					<li class= 'nav-item'><a href="/showteam?team_id=8" class ='nav-link'>KT</a></li>
+					<li class= 'nav-item'><a href="/showteam?team_id=9" class ='nav-link'>Samsung</a></li>
+					<li class= 'nav-item'><a href="/showteam?team_id=10" class ='nav-link'>NC</a></li>
+					
+				</ul>
+			</div>
+			<div class='content'>
+		
+		
+			<div class = 'table_wrapper' id='t_schedule'>
+				<p class='title'>Today's schedule</p>
+		    	<table class="type11" border="1" cellpadding="10px">
+			    	<thead>
+				    	<tr class="list-group">
+						    <th class="list-group-item-heading">home</th>
+						    <td class="list-group-item-text">vs</td>
+						    <td class="list-group-item-text">away</td>
+						   
+						</tr> 
+					</thead>
+			    	<tbody class="jumbotron_a">
+			    	</tbody>
+
+			    </table>
+		    </div>
+		    <!-- talbe1 -->
+
+		 	<div class = 'table_wrapper' id='brank'>
+		 		<p class='title'>AVG Top 15</p>
+			    <table class="type11" border="1" cellpadding="10px">
+			    	<thead class="thead">
+				    	<tr class="list-group">
+				    		
+						    <th class="list-group-item-heading">rank</th>
+						    <td class="list-group-item-text">name</td>
+						    <td class="list-group-item-text">team</td>
+						    <td class="list-group-item-text">avg</td>
+						   
+						</tr> 
+					</thead>
+			    	<tbody class="jumbotron_b">
+			    	</tbody>
+
+			    </table>
+		    </div>
+		    <!-- table2 -->
+
+		    <div class = 'table_wrapper' id='prank'>
+		    	<p class='title'>WIN Top 15</p>
+			    <table class="type11" border="1" cellpadding="10px">
+			    	<thead class="thead">
+			    		<tr class="list-group">
+						    <th class="list-group-item-heading">rank</th>
+						    <td class="list-group-item-text">name</td>
+						    <td class="list-group-item-text">team</td>
+						    <td class="list-group-item-text">w</td>
+
+						   
+						</tr> 
+			    	</thead>
+			    	<tbody class="jumbotron_c">
+			    		
+			    	</tbody>
+			    </table>
+		    </div>
+			    <!-- table3 -->
+		  	 </div>
+		    <!-- content -->
+		</div>
+		<!-- nav -->
+
+		
+    
+    </div>
+	<!-- frame     -->
+
+<!--   <footer class="footer">
+      <p>&copy; Company 2015</p>
+  </footer> -->
+</body>
+ 
+</html>

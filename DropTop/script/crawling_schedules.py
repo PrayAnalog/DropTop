@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 def main():
 	url = "https://www.koreabaseball.com/ws/Schedule.asmx/GetScheduleList"
 
-	payload = "leId=1&gameMonth=07&seasonId=2018&srIdList=0%2C9&teamId="
+	payload = "leId=1&gameMonth=01&seasonId=2018&srIdList=0%2C9&teamId="
 	headers = {
 	    'Host': "www.koreabaseball.com",
 	    'User-Agent': "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.12; rv:61.0) Gecko/20100101 Firefox/61.0",

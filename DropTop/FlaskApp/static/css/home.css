@@ -1,0 +1,155 @@
+body {
+	font:14px/1.8 Arial, Helvetica, sans-serif;
+	width: 100%;
+	margin: 0px;
+}
+.title {
+	margin-left: 20px;
+	/*font-size: 14px;*/
+	/*float:center;*/
+
+}
+
+.frame {
+	width: 100%;
+	margin: 0 auto;
+	border: 1px solid #aaa;
+}
+
+.header {
+	padding:10px 10px;
+	text-align: center;
+	background: #eee;
+	margin-bottom: 0px;
+}
+.logo {
+	font-size: 2em;
+	font-weight: bold;
+	background: /*#5457de*//*#ce4869*/#6495ED;
+	color: #fff;
+	display: inline-block;
+	padding: 0 8px;
+}
+.container {
+ 	overflow: hidden;
+ 	width: 100%;
+ 	display: table;
+ 	float: left;
+ 	background: #333;
+}
+
+.nav {
+  /*float: left;*/
+  display: table-cell;
+  width: 15%;
+  background: #333;
+  color: #fff;
+  margin-right: 50px;
+}
+.nav-list{
+  list-style: none;
+  margin: 0;
+  padding: 10px 0;
+}
+.nav-item {
+  margin: 4px 0;
+}
+.nav-link {
+  display: block;
+  text-decoration: none;
+  padding: 4px 10px;
+  color: #fff;
+}
+.nav-link:hover {
+  background: #5457de;
+}
+
+.content {
+  display: table-cell;
+/* float: left;*/
+  width: 85%;
+  background: #fff;
+}
+
+.table_wrapper{
+  /*overflow: scroll;*/
+  display: table-cell;
+  width: 408px;
+  height:6px;
+  padding:0px;
+}
+/*#t_schedule{
+	display: table-cell;
+}
+*/
+/*#brank{
+  float: left;
+}
+
+#prank{
+  float: left;
+}
+
+#t_schedule {
+  float: left;
+}*/
+
+.jumbotron_a{
+	overflow:scroll;
+	display:block;
+	
+	height: 550px;
+	vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
+.jumbotron_b{
+  overflow:scroll;
+  display:block;
+  height:550px;
+  
+}
+
+.jumbotron_c { 
+  overflow:scroll;
+  display:block;
+  height:550px;
+
+}
+.thead{
+  display:block;
+}
+
+
+
+
+table.type11 {
+    display: block;
+    border-collapse: separate;
+    border-spacing: 1px;
+    text-align: center;
+    line-height: 1.5;
+    margin: 20px 15px;
+}
+table.type11 th {
+    width: 155px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #fff;
+    background: /*#ce4869*/#6495ED ;
+}
+table.type11 td {
+    width: 155px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+}
+
+
+
+
+
+
+
