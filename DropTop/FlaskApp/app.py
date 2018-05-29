@@ -9,7 +9,7 @@ mysql = MySQL()
 # MySQL configurations
 app.config["MYSQL_DATABASE_USER"] = "root"
 app.config["MYSQL_DATABASE_PASSWORD"] = "droptop"
-app.config["MYSQL_DATABASE_DB"] = "BucketList"
+app.config["MYSQL_DATABASE_DB"] = "Baseball"
 app.config["MYSQL_DATABASE_HOST"] = "localhost"
 mysql.init_app(app)
 
